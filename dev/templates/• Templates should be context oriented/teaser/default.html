@@ -1,0 +1,5 @@
+<ul{% if teaserUlClass is defined %} class="{{ teaserUlClass }}" {% endif %}>
+{% for entry in craft.entries.section(currentSectionName) %}
+	<li{% block teaserLiClass %}{% endblock %}>{% block teaser %}<a href="{{ entry.url }}">{{ entry.title }}</a>{% endblock %}</li>
+{% endfor %}
+</ul>

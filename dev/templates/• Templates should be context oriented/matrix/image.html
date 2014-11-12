@@ -1,0 +1,10 @@
+{% if block.imageAsset|length %}
+<figure class="image">
+	{% for photo in block.imageAsset %}
+	<a href="{{ photo.url }}"><img src="{{ photo.url }}" alt="{{block.altTag}}"></a>
+	{% if block.caption|length %}
+	<figcaption>{{ block.caption }}</figcaption>
+	{% endif %}
+	{% endfor %}
+</figure>
+{% endif %}

@@ -1,0 +1,4 @@
+{% for block in matrixBlock %}
+{% include ['matrix/' ~ block.type ~ '-' ~ entry.section.handle,
+						'matrix/' ~ block.type ] %}
+{% endfor %}

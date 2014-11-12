@@ -1,0 +1,8 @@
+node_modules
+.tmp
+dev/bower_components
+.sass-cache
+.DS_Store
+craft/storage/runtime/**/*
+craft/storage/backups/**/*
+/dev/js/app.js

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<title>{% if title is defined %}{{ title }} - {% endif %}{{ siteName }}</title>
+
+		<!-- build:css /css/app.min.css -->
+		<link rel="stylesheet" href="/css/app.css">
+		<!-- endbuild -->
+		
+			<!-- build:css /css/ie8.css -->
+			<!--[if IE 8]>
+			<link rel="stylesheet" href="/css/ie8.css">
+				<![endif]-->
+			<!-- endbuild -->
+			
+			<!-- build:js /js/vendor/ie8-head.js -->
+			<!--[if IE 8]>
+			<script src="/git_submodules/ie8-f5/ie8-head.js"></script>
+				<![endif]-->
+			<!-- endbuild -->
+		
+		<!-- build:js /js/vendor/modernizr.min.js -->
+		<script src="/bower_components/modernizr/modernizr.js"></script>
+		<!-- endbuild -->
+	</head>
+
+	<body>
+		<div class="main">
+			<!-- Header -->
+			<div class="header">
+				<div class="row main-menu">
+					<nav class="top-bar" data-topbar>
+						
+						<ul class="title-area">
+							<li class="name"><h1><a href="{{siteUrl}}">
+								<img src="logoimage.jpg">
+							</a></h1></li>
+								<li class="toggle-topbar menu-icon"><a href="#">{{ menuName.entry}}&nbsp;</a></li>
+						</ul>
+
+						<section class="top-bar-section clearfix">
+							{# Fetch the main menu items #}
+							{% set mainNav = craft.entries.section('mainNavigation') %}
+							{# Loop through all items and display them #}
+							<ul class="right">
+							{% nav link in mainNav %}
+								{# Fetch the related mainNavigation entry based on our current entry #}
+								{% set relatedToEntry = mainNav.relatedTo(entry)%}
+								{# Check to see if there is a mainNavigation entry and if it matches the current entry. If it does add class active to the li. Only add the active tag to the top level menu item  #}
+								{% set active = (relatedToEntry|length and relatedToEntry[0].slug == link.slug and link.hasDescendants ) or (relatedToEntry|length and relatedToEntry[0].parent != "" and relatedToEntry[0].parent.slug == link.slug)%}
+								{# Check to see if this entry has any children. If it does add the class has-dropdown to the li #}
+								{% set dropdown = link is defined and link.hasDescendants() %}
+								
+								<li{% if dropdown or active %} class="{% if dropdown %}has-dropdown{% endif %}{% if active %} active{% endif %}"{% endif %}>
+								{% if link.relatedEntry|length %}
+									<a href="{{ link.relatedEntry[0].url }}">{{ link.title }}</a>
+								{% else %}
+									<a href="{{ link.externalLink }}">{{ link.title }}</a>
+								{% endif %}
+									{% ifchildren %}
+										<ul class="dropdown">
+											{% children %}
+										</ul>
+									{% endifchildren %}
+								</li>
+							{% endnav %}
+							</ul>
+							<ul id="search" class="right">
+								<li class="has-form">
+									<form class="form" action="" method="post">
+										<div class="row collapse postfix-round">
+											<div class="small-9 large-12 columns">
+												<input class="search-form-box radius" type="search" placeholder="search" name="keywords">
+											</div>
+											<div class="small-3 columns hide-for-large-up">
+												<input class="search-form-submit button expand " type="submit" value="Go" name="submit">
+											</div>
+										</div>
+									</form>
+							</ul>
+						</section>
+					</nav>
+				</div>
+			</div>
+			<!-- /Header -->
+			
+			<!-- Content -->
+			<div class="article content" role="main">
+				{% block content %}
+				<div class="row section">
+					<div class="columns large-12">
+						<p>If you see me, you haven’t set your <code>{% verbatim %}{% block content %}…{% endblock %}{% endverbatim %}</code> yet.</p>
+						<p>See Twig’s <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">Template Inheritance</a> documentation for an explanation.</p>
+					</div>
+				</div>
+				{% endblock %}
+			</div>
+			<!-- /Content -->
+				
+			<!-- Footer -->
+			<div class="footer">
+				<div class="row">
+					<div class="columns small-12">
+						{% set footNav = craft.entries.section('footerNavigation') %}
+						<ul class="footer-nav-links">
+							{% nav link in footNav %}
+							<li>
+							{% if link.relatedEntry|length %}
+								<a href="{{ link.relatedEntry[0].url }}">{{ link.title }}</a>
+							{% else %}
+								<a href="{{ link.externalLink }}">{{ link.title }}</a>
+							{% endif %}
+							</li>
+							{% endnav %}
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="columns small-12">
+						<p class="text-center">{{ include(template_from_string(copyright.entry)|raw) }}</p>
+					</div>
+				</div>
+			</div>
+				<!-- /Footer -->
+				
+		</div><!-- /Main -->
+		
+		<!--[if IE 8]>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<![endif]-->
+			
+		<!-- build:js /js/vendor/ie8-foundation-help.js -->
+		<!--[if IE 8]>
+		<script src="/git_submodules/ie8-f5/ie8-foundation.js"></script>
+		<![endif]-->
+		<!-- endbuild -->
+		
+		<!-- build:js /js/vendor/libraries.min.js -->
+		<!-- bower:js -->
+		<script src="../bower_components/jquery/dist/jquery.js"></script>
+		<script src="../bower_components/fastclick/lib/fastclick.js"></script>
+		<script src="../bower_components/slick.js/slick/slick.min.js"></script>
+		<!-- endbower -->
+		<!-- endbuild -->
+		
+		<!-- build:js /js/vendor/foundation.min.js -->
+		<script src="/bower_components/foundation/js/foundation.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.abide.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.accordion.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.alert.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.clearing.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.dropdown.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.equalizer.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.interchange.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.magellan.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.orbit.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.offcanvas.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.reveal.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.slider.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.tab.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.tooltip.js"></script>
+		<script src="/bower_components/foundation/js/foundation/foundation.topbar.js"></script>
+		<script>$(document).foundation();</script>
+		<!-- endbuild -->
+		
+		<!-- Start Joyride on page -->
+		<script>$(document).foundation().foundation('joyride', 'start');</script>
+		
+		<!-- build:js /js/app.min.js -->
+		<script src="/js/app.js"></script>
+		<!-- endbuild -->
+		
+		<!-- build:js /js/vendor/slick.min.js -->
+		<script src="/bower_components/slick-carousel/slick/slick.js"></script>
+		<!-- endbuild -->
+		
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','{{ googleAnalyticsCode }}','auto');ga('send','pageview');
+    </script>
+			
+			<!--[if lt IE 9]>
+			<script type="text/javascript"> 
+				var $buoop = {}; 
+				$buoop.ol = window.onload; 
+				window.onload=function(){ 
+				try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
+				var e = document.createElement("script"); 
+				e.setAttribute("type", "text/javascript"); 
+				e.setAttribute("src", "//browser-update.org/update.js"); 
+				document.body.appendChild(e); 
+				} 
+			</script>
+				<![endif]-->
+			<!-- build:js /js/vendor/ie8.js -->
+			<!--[if lt IE 9]>
+			<script src="/git_submodules/ie8-f5/ie8.js"></script>
+			<![endif]-->
+			<!-- endbuild -->
+	</body>
+</html>

@@ -1,0 +1,8 @@
+<li>
+{% if block.image|length %}
+{% for photo in block.aside %}
+	<img src="{{ photo.url }}" alt="{{block.imageAltText}}">
+{% endfor %}
+{% endif %}
+	{{ block.bodyCopy}}
+</li>

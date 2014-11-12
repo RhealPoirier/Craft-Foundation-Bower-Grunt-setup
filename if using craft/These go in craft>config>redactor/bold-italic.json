@@ -1,0 +1,8 @@
+{
+	buttons: ['html','bold', 'italic'],
+	toolbarFixedBox: true,
+	paragraphize: false,
+	replaceDivs: false,
+	deniedTags: ['p', 'h1', 'h2', 'pre']
+	
+}

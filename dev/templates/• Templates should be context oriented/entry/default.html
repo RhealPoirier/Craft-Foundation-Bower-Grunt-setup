@@ -1,0 +1,17 @@
+{% extends "_layout" %}
+{% set title = entry.title %}
+{% block content %}
+		<div class="section">
+			<div class="row">
+{# Side List #}
+				<div class="columns medium-3">
+					{% include 'teaser' with {'currentSectionName': entry.section.handle} %}
+				</div>
+{# Main Content #}
+				<div class="columns medium-9">
+						<h1>{{ entry.title }}</h1>
+						{% include 'matrix' with {'matrixBlock' : entry.mainContent} %}
+				</div>
+			</div>
+		</div>
+{% endblock %}

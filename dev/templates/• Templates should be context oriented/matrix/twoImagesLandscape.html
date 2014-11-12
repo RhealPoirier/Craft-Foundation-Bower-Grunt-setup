@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="medium-6 columns">
+{# First Image #}
+{% if block.image1Asset|length %}
+<figure class="image">
+	{% for photo in block.image1Asset %}
+	<a href="{{ photo.url }}"><img src="{{ photo.url }}" alt="{{block.image1AltTag}}"></a>
+	{% if block.image1Caption|length %}
+	<figcaption>{{ block.image1Caption }}</figcaption>
+	{% endif %}
+	{% endfor %}
+</figure>
+{% endif %}
+</div>
+	<div class="medium-6 columns">
+{# Second Image #}
+{% if block.image2Asset|length %}
+<figure class="image">
+	{% for photo in block.image2Asset %}
+	<a href="{{ photo.url }}"><img src="{{ photo.url }}" alt="{{block.image2AltTag}}"></a>
+	{% if block.image2Caption|length %}
+	<figcaption>{{ block.image2Caption }}</figcaption>
+	{% endif %}
+	{% endfor %}
+</figure>
+{% endif %}
+</div>
+</div>
